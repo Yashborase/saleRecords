@@ -1,0 +1,96 @@
+{% extends 'enroll/base.html' %} {% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        <h4 class="text-center alert alert-info">Add New Record</h4>
+        <form action="" method="POST">
+            {% csrf_token %} {{form.as_p}}
+            <input type="submit" class="btn btn-success" value="Add">
+        </form>
+
+
+        <!-- <form action="{% url 'ExportLeads' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file"
+                   title="Upload excel file"
+                   name="excel_file"
+                   style="border: 1px solid black; padding: 5px;"
+                   required="required">
+            <p>
+            <input type="submit"
+                   value="Upload"
+                   style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+        </form> -->
+
+
+    </div>
+    <div class="col-sm-8">
+        <a href="{% url 'ImportLeads' %}" class="btn btn-success">Import Sales</a>
+        <br></br>
+        <form action="{% url 'ExportLeads' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file"
+                   title="Upload excel file"
+                   name="excel_file"
+                   style="border: 1px solid black; padding: 5px;"
+                   required="required">
+            <p>
+            <input type="submit"
+                   value="Upload"
+                   style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+        </form>
+        <!-- <a href="{% url 'ExportLeads' %}" class="btn btn-success">Export Leads</a> -->
+        
+        <h4 class="text-center alert alert-info">Show all Rcords</h4>
+        {% if lead_obj %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Order Quantity</th>
+                    <th scope="col">Sales</th>
+                    <th scope="col">Ship Mode</th>
+                    <th scope="col">Profit</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Customer Segment</th>
+                    <th scope="col">Product Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for l in lead_obj %}
+
+                <tr>
+                    <th scope="row">{{l.id}}</th>
+                    <td>{{l.order_ID}}</td>
+                    <td>{{l.order_date}}</td>
+                    <td>{{l.order_quantity}}</td>
+                    <td>{{l.sales_p}}</td>
+                    <td>{{l.ship_mode}}</td>
+                    <td>{{l.profit_p}}</td>
+                    <td>{{l.unit_price}}</td>
+                    <td>{{l.customer_name}}</td>
+                    <td>{{l.customer_segment}}</td>
+                    <td>{{l.product_category}}</td>
+                    <td>
+                        <a href="{% url 'UpdateLead' l.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        
+                        <form action="{% url 'DeleteLead' l.id%}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                        </form>
+
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        {% else %}
+        <h4 class="text-center alert alert-warning">No leads Generated</h4>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
