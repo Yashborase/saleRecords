@@ -69,7 +69,7 @@ def delete_lead(request, id):
     
 def import_leads(request):
     
-    import pdb;pdb.set_trace()
+    #import pdb;pdb.set_trace()
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="users.xls"'
 
@@ -116,7 +116,7 @@ def export_leads(request):
     aware_datetime.tzinfo  
    
     request.method = "POST"
-    import pdb;pdb.set_trace()
+    #import pdb;pdb.set_trace()
     if request.method == 'POST':
         sale_resource = SaleResource()
         dataset = Dataset()
@@ -130,49 +130,10 @@ def export_leads(request):
         # import pdb;pdb.set_trace()
         # print([str(x) for x in imported_data])
         for data in imported_data:
-            data2_str=str(data[0])
+            
             data_str=str(data[1])
-            data_str3=str(data[2])
-            print(data[0],"================>",type(data2_str))
-            print(data[1],"================>",type(data_str))
-            print(data[2],"================>",type(data_str3))
         
             value = Sale(data[0],data_str,data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9])
             value.save()  
     return HttpResponseRedirect('/') 
-
-# def upload_data(request):
-#     # import pdb;pdb.set_trace()
-#     if request.method == 'POST':
-#         import pdb;pdb.set_trace()
-#         sale_resource = SaleResource()
-#         dataset = Dataset()
-#         new_sale = request.FILES['myfile']
-
-#         if not new_sale.name.endswith('.xlsx'):
-#             messages.info(request,'Wrong Format')
-#             return render(request, 'enroll/update.html',{'form':fm})
-
-
-#         imported_data = dataset.load(new_sale.read(),format='xlsx')
-#         print("=====================>",imported_data)
-#         for data in imported_data:
-#         	print(data[1])
-#         	value = Sale(
-#         		data[0],
-#         		data[1],
-#         		 data[2],
-#         		 data[3],
-#                  data[4],
-#         		 data[5],
-#         		 data[6],
-#                  data[7],
-#         		 data[8],
-#         		 data[9],
-#                  data[10],
-
-#         		)
-#         	value.save()  
-#     return HttpResponseRedirect('/') 
-#         # return render(request, 'enroll/update.html',{'form':fm})
     
